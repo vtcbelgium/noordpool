@@ -35,10 +35,10 @@ jobs:
         run: node scripts/build.mjs
 
       - name: GitHub Pages voorbereiden
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Website klaarzetten
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -54,4 +54,4 @@ jobs:
     steps:
       - name: Website publiceren
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
