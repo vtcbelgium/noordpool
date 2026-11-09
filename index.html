@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1923" />
+    <meta name="description" content="Reis naar 90° noorderbreedte. Verken Santa's besneeuwde werkplaats onder een dansend noorderlicht in deze interactieve Three.js-scène." />
+    <title>Noordpool — Waar kerst begint</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <script type="importmap">
+      { "imports": {
+        "three": "./vendor/three/three.module.js",
+        "three/addons/": "./vendor/three/addons/"
+      } }
+    </script>
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="scene" aria-label="Interactieve 3D-scène van de Noordpool. Sleep om rond te kijken en klik op het rode cadeau om het te openen."></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <header class="header">
+        <a class="wordmark" href="./" aria-label="Noordpool, startpagina">
+          <svg class="brand-star" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="m20 1 4.2 14.8L39 20l-14.8 4.2L20 39l-4.2-14.8L1 20l14.8-4.2L20 1Z" fill="currentColor"/><path d="m6 6 10 10M24 24l10 10M34 6 24 16M16 24 6 34" stroke="currentColor" stroke-width="1"/></svg>
+          <span>noordpool<span class="wordmark-dot">.</span></span>
+        </a>
+        <div class="location"><span class="live-dot" aria-hidden="true"></span>90°00′00″ N <span class="location-divider">/</span> HET HOGE NOORDEN</div>
+        <button id="help-button" class="text-button" type="button" aria-haspopup="dialog"><span>Hoe werkt het?</span><span class="question-icon" aria-hidden="true">?</span></button>
+      </header>
+
+      <section class="intro" aria-labelledby="title">
+        <p class="eyebrow"><span class="tiny-line" aria-hidden="true"></span> EEN PLEK VOL VERWONDERING</p>
+        <h1 id="title">Waar kerst<br /><em>begint.</em></h1>
+        <p class="intro-copy">Voorbij de wereld die je kent,<br />brandt altijd nog een lichtje.</p>
+        <button id="explore-button" class="explore-button" type="button"><span>Ontdek de Noordpool</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.3"/></svg></button>
+        <div class="intro-detail" aria-hidden="true"><span>POOLNACHT</span><span class="detail-line"></span><span>−28 °C</span></div>
+      </section>
+
+      <div id="loading" class="loading" role="status"><span class="loading-star" aria-hidden="true">✦</span><span>Een beetje kerstmagie laden…</span></div>
+      <div id="error" class="error-card" role="alert" hidden><span class="eyebrow">DE SCÈNE KON NIET STARTEN</span><h2>Het licht gaat zo weer aan.</h2><p id="error-message">Open deze pagina in een recente browser met WebGL 2.</p><button id="reload-button" class="primary-button" type="button">Opnieuw proberen</button></div>
+
+      <div id="gift-toast" class="gift-toast" role="status" aria-live="polite" hidden><span aria-hidden="true">✦</span><div><strong>Een klein beetje kerstmagie.</strong><span>Speciaal voor jou. Fijne feestdagen!</span></div></div>
+
+      <div class="scene-caption"><span class="caption-line" aria-hidden="true"></span><div><span class="eyebrow">LICHT AAN. KERSTMAGIE AAN.</span><span>Santa’s werkplaats</span></div></div>
+
+      <div class="bottom-area">
+        <div class="navigation-hint"><svg viewBox="0 0 24 28" fill="none" aria-hidden="true"><rect x="5" y="2" width="14" height="22" rx="7" stroke="currentColor"/><path d="M12 6v5" stroke="currentColor" stroke-linecap="round"/></svg><span>Sleep om rond te kijken<br /><span>Scroll om dichterbij te komen</span></span></div>
+
+        <nav class="toolbar" aria-label="Scène bedienen">
+          <button id="snow-button" class="tool-button" type="button" aria-label="Sneeuw" aria-pressed="true" title="Sneeuw aan of uit"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M3.34 7l17.32 10M3.34 17 20.66 7M9 4l3 3 3-3M9 20l3-3 3 3M3.6 10.6l4.1-1.1-1.1-4.1m10.8 13.2-1.1-4.1 4.1-1.1M6.6 18.6l1.1-4.1-4.1-1.1m16.8-2.8-4.1-1.1 1.1-4.1" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sneeuw</span><span class="toggle-dot" aria-hidden="true"></span></button>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+          <button id="aurora-button" class="tool-button" type="button" aria-label="Noorderlicht" aria-pressed="true" title="Noorderlicht aan of uit"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 18c4-12 5 2 9-9s5 5 9-5M3 22c4-12 5 2 9-9s5 5 9-5M3 13c4-12 5 2 9-9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg><span>Noorderlicht</span><span class="toggle-dot" aria-hidden="true"></span></button>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+          <button id="reset-button" class="tool-button icon-only" type="button" aria-label="Terug naar het startuitzicht" title="Terug naar het startuitzicht"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9a8 8 0 1 1-.2 5M4 4v5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button id="fullscreen-button" class="tool-button icon-only" type="button" aria-label="Volledig scherm" title="Volledig scherm"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </nav>
+
+        <button id="gift-button" class="gift-button" type="button"><span class="gift-icon" aria-hidden="true"><svg viewBox="0 0 26 26" fill="none"><path d="M4 12h18v11H4V12Zm-1-5h20v5H3V7Zm10 0v16M13 7C5 7 5 1 8.5 2 11 2 13 7 13 7Zm0 0c8 0 8-6 4.5-5C15 2 13 7 13 7Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="gift-eyebrow">ER WACHT IETS OP JE</span><span id="gift-button-label">Open je cadeau <span aria-hidden="true">↗</span></span></span></button>
+      </div>
+
+      <footer class="footer"><span>EEN INTERACTIEVE WINTERWERELD</span><span class="footer-center">GEMAAKT MET THREE.JS <span aria-hidden="true">✦</span></span><span class="performance"><span class="live-dot" aria-hidden="true"></span><span id="fps-label">SCÈNE LADEN</span></span></footer>
+
+      <dialog id="help-dialog" aria-labelledby="help-title">
+        <button class="close-dialog" id="close-help" type="button" aria-label="Uitleg sluiten">×</button>
+        <p class="eyebrow">WELKOM OP 90° NOORDERBREEDTE</p>
+        <h2 id="help-title">Neem even de tijd<br />voor <em>verwondering.</em></h2>
+        <p class="dialog-intro">Een kleine winterwereld die je zelf kunt ontdekken.</p>
+        <div class="help-items"><div><span class="help-number">01</span><div><h3>Kijk om je heen</h3><p>Sleep met de muis om te draaien. Scroll om in of uit te zoomen. Op je telefoon: sleep met één vinger en knijp met twee vingers.</p></div></div><div><span class="help-number">02</span><div><h3>Vind jouw verrassing</h3><p>Klik op het rode cadeau in de sneeuw. Het deksel springt open en er ontsnapt een beetje kerstmagie. Je kunt het ook openen met de cadeauknop.</p></div></div><div><span class="help-number">03</span><div><h3>Maak het jouw poolnacht</h3><p>Zet sneeuw en noorderlicht aan of uit met de knoppen onderaan. De ronde pijl brengt je terug naar het startuitzicht.</p></div></div></div>
+        <div class="quality-row"><label for="quality-select">Beeldkwaliteit</label><select id="quality-select"><option value="auto">Automatisch</option><option value="high">Hoog</option><option value="low">Energiezuinig</option></select></div>
+        <p class="help-footnote">De beeldkwaliteit past zich automatisch aan voor een soepele ervaring. De temperatuur is onderdeel van de sfeer.</p>
+      </dialog>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

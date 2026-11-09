@@ -1,0 +1,16 @@
+{
+  "name": "noordpool",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Een interactieve Three.js-poolnacht met Santa's werkplaats.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/serve.mjs --preview",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  }
+}
