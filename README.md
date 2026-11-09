@@ -2,6 +2,12 @@
 
 Een interactieve winterwereld voor een schoolopdracht met **Three.js**. Een besneeuwde werkplaats op 90° noorderbreedte, met warm raamlicht, kerstbomen, een bewegend noorderlicht en een cadeau dat je kunt openen.
 
+## Online bekijken
+
+**[Open de Noordpool-scène](https://vtcbelgium.github.io/noordpool/)**
+
+De website staat op GitHub Pages en is zonder account te openen. De broncode staat in [vtcbelgium/noordpool](https://github.com/vtcbelgium/noordpool). Na elke push naar `main` controleert en bouwt GitHub Actions de scène en publiceert de nieuwe versie automatisch. Je kunt dit volgen op het tabblad **Actions** van de repository.
+
 ## Starten
 
 Installeer [Node.js](https://nodejs.org/) 22.12 of hoger (Node 24 LTS aanbevolen). Open een terminal in deze map:
